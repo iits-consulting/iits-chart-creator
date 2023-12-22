@@ -44,6 +44,7 @@ jobs:
           git config --global user.name 'iits'
           git config --global user.email 'cloudOps@iits-consulting.de'
           git add plugin.yaml
-          git add iits-chart-creator*
+          ls
+#          git add iits-chart-creator*
           git commit -m "Update plugin.yaml with new version and checksums"
           git push origin HEAD:main
