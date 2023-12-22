@@ -7,25 +7,25 @@ command: "$HELM_PLUGIN_DIR/iits-chart-creator"
 platformCommand:
   -  os: darwin
      arch: amd64
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_darwin_amd64"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_darwin_amd64_v1/iits-chart-creator"
   -  os: darwin
      arch: arm64
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_darwin_arm64"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_linux_arm64/iits-chart-creator"
   -  os: linux
      arch: "386"
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_linux_386"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_linux_amd64_v1/iits-chart-creator"
   -  os: linux
      arch: amd64
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_linux_amd64"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_linux_386/iits-chart-creator"
   -  os: linux
      arch: arm64
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_linux_arm64"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_darwin_arm64/iits-chart-creator"
   -  os: windows
      arch: "386"
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_windows_386.exe"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_windows_amd64_v1/iits-chart-creator.exe"
   -  os: windows
      arch: amd64
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_windows_amd64.exe"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_windows_arm64/iits-chart-creator.exe"
   -  os: windows
      arch: arm64
-     command: "$HELM_PLUGIN_DIR/iits-chart-creator_NEW_VERSION_windows_arm64.exe"
+     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_windows_386/iits-chart-creator.exe"
