@@ -36,32 +36,14 @@ jobs:
       - name: Update plugin.yaml
         run: |
           NEW_VERSION=${GITHUB_REF#refs/tags/}
-          
-          darwin_amd64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_darwin_amd64.tar.gz | awk '{ print $1 }')
-          darwin_arm64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_darwin_arm64.tar.gz | awk '{ print $1 }')
-          linux_386_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_linux_386.tar.gz | awk '{ print $1 }')
-          linux_amd64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_linux_amd64.tar.gz | awk '{ print $1 }')
-          linux_arm64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_linux_arm64.tar.gz | awk '{ print $1 }')
-          windows_386_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_windows_386.tar.gz | awk '{ print $1 }')
-          windows_amd64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_windows_amd64.tar.gz | awk '{ print $1 }')
-          windows_arm64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_windows_arm64.tar.gz | awk '{ print $1 }')
-          
-          
           cp plugin_template.yaml plugin.yaml
-          sed -i -e "s/NEW_VERSION/$NEW_VERSION/g" \
-                 -e "s/darwin_amd64_checksum/$darwin_amd64_checksum/g" \
-                 -e "s/darwin_arm64_checksum/$darwin_arm64_checksum/g" \
-                 -e "s/linux_386_checksum/$linux_386_checksum/g" \
-                 -e "s/linux_amd64_checksum/$linux_amd64_checksum/g" \
-                 -e "s/linux_arm64_checksum/$linux_arm64_checksum/g" \
-                 -e "s/windows_386_checksum/$windows_386_checksum/g" \
-                 -e "s/windows_amd64_checksum/$windows_amd64_checksum/g" \
-                 -e "s/windows_arm64_checksum/$windows_arm64_checksum/g" plugin.yaml 
+          sed -i -e "s/NEW_VERSION/$NEW_VERSION/g" plugin.yaml 
 
       - name: Commit and Push new plugin.yaml
         run: |
           git config --global user.name 'iits'
           git config --global user.email 'cloudOps@iits-consulting.de'
           git add plugin.yaml
+          git add dist
           git commit -m "Update plugin.yaml with new version and checksums"
           git push origin HEAD:main

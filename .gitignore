@@ -210,7 +210,6 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/go,intellij,macos,linux,visualstudiocode
 
-dist/
 .DS_Store
 .vscode/launch.json
 
