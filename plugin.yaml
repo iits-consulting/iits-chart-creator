@@ -1,5 +1,5 @@
 name: "iits-chart-creator"
-version: "0.1.9"
+version: "0.13.0"
 usage: "This creates helm charts based on iits standards"
 description: "iits helm chart manager"
 ignoreFlags: false
@@ -7,25 +7,25 @@ command: "$HELM_PLUGIN_DIR/iits-chart-creator"
 platformCommand:
   -  os: darwin
      arch: amd64
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_darwin_amd64"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_darwin_amd64"
   -  os: darwin
      arch: arm64
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_darwin_arm64"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_darwin_arm64"
   -  os: linux
      arch: "386"
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_linux_386"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_linux_386"
   -  os: linux
      arch: amd64
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_linux_amd64"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_linux_amd64"
   -  os: linux
      arch: arm64
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_linux_arm64"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_linux_arm64"
   -  os: windows
      arch: "386"
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_windows_386"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_windows_386.exe"
   -  os: windows
      arch: amd64
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_windows_amd64"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_windows_amd64.exe"
   -  os: windows
      arch: arm64
-     command: "$HELM_PLUGIN_DIR/dist/iits-chart-creator_0.1.9_windows_arm64"
+     command: "$HELM_PLUGIN_DIR/iits-chart-creator_0.13.0_windows_arm64.exe"
