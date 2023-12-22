@@ -1,0 +1,8 @@
+b523cf12d983f9d8ff02d87e2ceb5a7b028b84d517b76e516b597007b4c8eb70  iits-chart-creator_0.1.8_darwin_amd64.tar.gz
+83359bc9dd8e170ffa1686807dbdfd72d65bb752251531078ce5dceee3906593  iits-chart-creator_0.1.8_darwin_arm64.tar.gz
+057785bbabeb5eb48cc1fbc010d5ecb2f3bb40b57953485e4db799d5a16e3a3b  iits-chart-creator_0.1.8_linux_386.tar.gz
+1ae8d32eb3b85aea966a22987e50e7a46e2e78745115923ced29828ee8cc497a  iits-chart-creator_0.1.8_linux_amd64.tar.gz
+9ed0a93e57767cf87441dc63d1199d11e247c6c1fc6221abe3534a45dfddc285  iits-chart-creator_0.1.8_linux_arm64.tar.gz
+66709c6db667b978dd44ae3534ff86041371aa3e56a4fcf3c4d50ace5d2899a7  iits-chart-creator_0.1.8_windows_386.tar.gz
+87417e8be6671577317949bab71c3d337b0a03d33993f456220a6d8018a9cd11  iits-chart-creator_0.1.8_windows_amd64.tar.gz
+d2692965d3f571152eae211f9b9b93ebc08121c48d45eb6a2199294b7752f1e8  iits-chart-creator_0.1.8_windows_arm64.tar.gz
