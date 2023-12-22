@@ -37,14 +37,14 @@ jobs:
         run: |
           NEW_VERSION=${GITHUB_REF#refs/tags/}
           
-          darwin_amd64_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_darwin_amd64.tar.gz | awk '{ print $1 }')
-          darwin_arm64_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_darwin_arm64.tar.gz | awk '{ print $1 }')
-          linux_386_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_linux_386.tar.gz | awk '{ print $1 }')
-          linux_amd64_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_linux_amd64.tar.gz | awk '{ print $1 }')
-          linux_arm64_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_linux_arm64.tar.gz | awk '{ print $1 }')
-          windows_386_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_windows_386.tar.gz | awk '{ print $1 }')
-          windows_amd64_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_windows_amd64.tar.gz | awk '{ print $1 }')
-          windows_arm64_checksum=$(sha256sum dist/iits-chart-creator_$NEW_VERSION_windows_arm64.tar.gz | awk '{ print $1 }')
+          darwin_amd64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_darwin_amd64.tar.gz | awk '{ print $1 }')
+          darwin_arm64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_darwin_arm64.tar.gz | awk '{ print $1 }')
+          linux_386_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_linux_386.tar.gz | awk '{ print $1 }')
+          linux_amd64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_linux_amd64.tar.gz | awk '{ print $1 }')
+          linux_arm64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_linux_arm64.tar.gz | awk '{ print $1 }')
+          windows_386_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_windows_386.tar.gz | awk '{ print $1 }')
+          windows_amd64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_windows_amd64.tar.gz | awk '{ print $1 }')
+          windows_arm64_checksum=$(sha256sum dist/iits-chart-creator_${NEW_VERSION}_windows_arm64.tar.gz | awk '{ print $1 }')
           
           
           cp plugin_template.yaml plugin.yaml
