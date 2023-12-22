@@ -1,5 +1,5 @@
 name: "iits-chart-creator"
-version: "0.1.2"
+version: "0.1.4"
 usage: "This creates helm charts based on iits standards"
 description: "iits helm chart manager"
 ignoreFlags: false
@@ -9,17 +9,17 @@ platforms:
       matchLabels:
         os: linux
         arch: amd64
-    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/0.1.2/iits-chart-creator-linux-amd64.tar.gz
-    sha256: "10d89a98bd9d78599dd30f559572c1dc57b49683c0f2659d981a1164490c2d33"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/0.1.4/iits-chart-creator-linux-amd64.tar.gz
+    sha256: ""
   - selector:
       matchLabels:
         os: darwin
         arch: amd64
-    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/0.1.2/iits-chart-creator-darwin-amd64.tar.gz
-    sha256: "61243b17702e6d5b34cc997673bafa78e63f0949571292b8c61e3d3d6360fd0d"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/0.1.4/iits-chart-creator-darwin-amd64.tar.gz
+    sha256: ""
   - selector:
       matchLabels:
         os: windows
         arch: amd64
-    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/0.1.2/iits-chart-creator-windows-amd64.tar.gz
-    sha256: "e9451ddf4999b6fac117b815fd9f27ad1a2a5fd79555ef1fd41f929e72e12e07"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/0.1.4/iits-chart-creator-windows-amd64.tar.gz
+    sha256: ""
