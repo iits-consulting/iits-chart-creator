@@ -22,16 +22,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: ^1.16
-
-      - name: Get dependencies
-        run: go mod download
-
-      - name: Build binaries
-        run: |
-          env GOOS=linux GOARCH=amd64 go build -v -o ${{ env.BINARY_NAME_LINUX }}
-          env GOOS=darwin GOARCH=amd64 go build -v -o ${{ env.BINARY_NAME_DARWIN }}
-          env GOOS=windows GOARCH=amd64 go build -v -o ${{ env.BINARY_NAME_WINDOWS }}
+          go-version: ^1.20
 
       - name: Update plugin.yaml
         run: |
@@ -45,16 +36,16 @@ jobs:
                  -e "s/DARWIN_CHECKSUM/$DARWIN_CHECKSUM/g" \
                  -e "s/WINDOWS_CHECKSUM/$WINDOWS_CHECKSUM/g" plugin.yaml 
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v3
         with:
-          name: Compiled Binaries
-          path: |
-            ${{ env.BINARY_NAME_LINUX }}
-            ${{ env.BINARY_NAME_DARWIN }}
-            ${{ env.BINARY_NAME_WINDOWS }}
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTARYTOOL_PASS: ${{ secrets.NOTARYTOOL_PASS }}
 
-      - name: Commit and Push Changes
+      - name: Commit and Push new plugin.yaml
         run: |
           git config --global user.name 'iits'
           git config --global user.email 'cloudOps@iits-consulting.de'
