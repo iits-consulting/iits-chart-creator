@@ -7,19 +7,49 @@ command: "$HELM_PLUGIN_DIR/iits-chart-creator"
 platforms:
   - selector:
       matchLabels:
-        os: linux
+        os: darwin
         arch: amd64
-    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator-linux-amd64.tar.gz
-    sha256: "LINUX_CHECKSUM"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_darwin_amd64.tar.gz
+    sha256: "darwin_amd64_checksum"
   - selector:
       matchLabels:
         os: darwin
+        arch: arm64
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_darwin_arm64.tar.gz
+    sha256: "darwin_arm64_checksum"
+  - selector:
+      matchLabels:
+        os: linux
+        arch: "386"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_linux_386.tar.gz
+    sha256: "linux_386_checksum"
+  - selector:
+      matchLabels:
+        os: linux
         arch: amd64
-    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator-darwin-amd64.tar.gz
-    sha256: "DARWIN_CHECKSUM"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_linux_amd64.tar.gz
+    sha256: "linux_amd64_checksum"
+  - selector:
+      matchLabels:
+        os: linux
+        arch: arm64
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_linux_arm64.tar.gz
+    sha256: "linux_arm64_checksum"
+  - selector:
+      matchLabels:
+        os: windows
+        arch: "386"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_windows_386.tar.gz
+    sha256: "windows_386_checksum"
   - selector:
       matchLabels:
         os: windows
         arch: amd64
-    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator-windows-amd64.tar.gz
-    sha256: "WINDOWS_CHECKSUM"
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_windows_amd64.tar.gz
+    sha256: "windows_amd64_checksum"
+  - selector:
+      matchLabels:
+        os: windows
+        arch: arm64
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator_NEW_VERSION_windows_arm64.tar.gz
+    sha256: "windows_arm64_checksum"
