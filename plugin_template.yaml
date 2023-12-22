@@ -1,0 +1,25 @@
+name: "iits-chart-creator"
+version: "NEW_VERSION"
+usage: "This creates helm charts based on iits standards"
+description: "iits helm chart manager"
+ignoreFlags: false
+command: "$HELM_PLUGIN_DIR/iits-chart-creator"
+platforms:
+  - selector:
+      matchLabels:
+        os: linux
+        arch: amd64
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator-linux-amd64.tar.gz
+    sha256: "LINUX_CHECKSUM"
+  - selector:
+      matchLabels:
+        os: darwin
+        arch: amd64
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator-darwin-amd64.tar.gz
+    sha256: "DARWIN_CHECKSUM"
+  - selector:
+      matchLabels:
+        os: windows
+        arch: amd64
+    uri: https://github.com/iits-consulting/iits-chart-creator/releases/download/NEW_VERSION/iits-chart-creator-windows-amd64.tar.gz
+    sha256: "WINDOWS_CHECKSUM"

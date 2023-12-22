@@ -1,0 +1,15 @@
+ingress:
+  enabled: true
+  host: #REPLACE_ME
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  hosts:
+    - host: "{{.Values.ingress.host}}"
+      paths:
+        - path: #REPLACE_ME
+  tls:
+    - hosts:
+        - "{{.Values.ingress.host}}"
+      secretName: "myService-cert"

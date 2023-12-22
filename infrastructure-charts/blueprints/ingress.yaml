@@ -1,0 +1,58 @@
+{{- with .Values.ingress }}
+{{- if .enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "myService.fullname" $ }}
+  {{- with .labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .annotations }}
+  annotations:
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
+spec:
+  ingressClassName: {{ .className | default "traefik" }}
+  {{- if .tls }}
+  tls:
+    {{- range .tls }}
+    {{- $certSecretName := .secretName | default (printf "%s-%s" (include "myService.fullname" $) "cert")}}
+    {{- if .hosts }}
+    {{- range .hosts }}
+    - hosts:
+        - {{ tpl (toYaml .) $ }}
+      secretName: {{ $certSecretName }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  rules:
+      {{- if .hosts }}
+      {{- range .hosts }}
+    - host: {{ tpl (toYaml .host) $ }}
+      http:
+        paths:
+            {{- range .paths }}
+          - path: {{ .path  }}
+            pathType: {{ .pathType | default "Prefix"}}
+            backend:
+              service:
+                name: #REPLACE_ME
+                port:
+                  number: #REPLACE_ME
+            {{- end }}
+      {{- end }}
+    {{- else }}
+    - host: {{ tpl (toYaml .host) $ }}
+      http:
+        paths:
+          - path: #REPLACE_ME
+            pathType: "Prefix"
+            backend:
+              service:
+                name: #REPLACE_ME
+                port:
+                  number: #REPLACE_ME
+    {{- end }}
+{{- end }}
+{{- end }}
