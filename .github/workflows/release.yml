@@ -6,64 +6,58 @@ on:
       - '*'
 
 jobs:
-  build:
-    name: Build Go project
+  release:
     runs-on: ubuntu-latest
+    env:
+      GOOS: linux
+      GOARCH: amd64
+      BINARY_NAME_LINUX: iits-chart-creator-linux-amd64
+      BINARY_NAME_DARWIN: iits-chart-creator-darwin-amd64
+      BINARY_NAME_WINDOWS: iits-chart-creator-windows-amd64.exe
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        name: Checkout code
 
-      - name: Set up Go 1.x
+      - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: ^1.16     # Set a minimum Go version, adjust as necessary
+          go-version: ^1.16
 
       - name: Get dependencies
         run: go mod download
 
-      - name: Build Linux binary
-        env:
-          GOOS: linux
-          GOARCH: amd64
-        run: go build -v -o iits-chart-creator-linux-amd64
-
-      - name: Build macOS binary
-        env:
-          GOOS: darwin
-          GOARCH: amd64
-        run: go build -v -o iits-chart-creator-darwin-amd64
-
-      - name: Build Windows binary
-        env:
-          GOOS: windows
-          GOARCH: amd64
-        run: go build -v -o iits-chart-creator-windows-amd64.exe
+      - name: Build binaries
+        run: |
+          env GOOS=linux GOARCH=amd64 go build -v -o ${{ env.BINARY_NAME_LINUX }}
+          env GOOS=darwin GOARCH=amd64 go build -v -o ${{ env.BINARY_NAME_DARWIN }}
+          env GOOS=windows GOARCH=amd64 go build -v -o ${{ env.BINARY_NAME_WINDOWS }}
 
       - name: Update plugin.yaml
         run: |
           NEW_VERSION=${GITHUB_REF#refs/tags/}
-          LINUX_CHECKSUM=$(sha256sum iits-chart-creator-linux-amd64 | awk '{ print $1 }')
-          DARWIN_CHECKSUM=$(sha256sum iits-chart-creator-darwin-amd64 | awk '{ print $1 }')
-          WINDOWS_CHECKSUM=$(sha256sum iits-chart-creator-windows-amd64.exe | awk '{ print $1 }')
-          
+          LINUX_CHECKSUM=$(sha256sum ${{ env.BINARY_NAME_LINUX }} | awk '{ print $1 }')
+          DARWIN_CHECKSUM=$(sha256sum ${{ env.BINARY_NAME_DARWIN }} | awk '{ print $1 }')
+          WINDOWS_CHECKSUM=$(sha256sum ${{ env.BINARY_NAME_WINDOWS }} | awk '{ print $1 }')
           cp plugin_template.yaml plugin.yaml
-          sed -i -e "s/NEW_VERSION/$NEW_VERSION/g" -e "s/LINUX_CHECKSUM/$LINUX_CHECKSUM/g" -e "s/DARWIN_CHECKSUM/$DARWIN_CHECKSUM/g" -e "s/WINDOWS_CHECKSUM/$WINDOWS_CHECKSUM/g" plugin.yaml 
+          sed -i -e "s/NEW_VERSION/$NEW_VERSION/g" \
+                 -e "s/LINUX_CHECKSUM/$LINUX_CHECKSUM/g" \
+                 -e "s/DARWIN_CHECKSUM/$DARWIN_CHECKSUM/g" \
+                 -e "s/WINDOWS_CHECKSUM/$WINDOWS_CHECKSUM/g" plugin.yaml 
 
-      - name: Upload Linux binary to artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: iits-chart-creator-linux-amd64
-          path: iits-chart-creator-linux-amd64
+          name: Compiled Binaries
+          path: |
+            ${{ env.BINARY_NAME_LINUX }}
+            ${{ env.BINARY_NAME_DARWIN }}
+            ${{ env.BINARY_NAME_WINDOWS }}
 
-      - name: Upload macOS binary to artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: iits-chart-creator-darwin-amd64
-          path: iits-chart-creator-darwin-amd64
-
-      - name: Upload Windows binary to artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: iits-chart-creator-windows-amd64
-          path: iits-chart-creator-windows-amd64.exe
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'iits'
+          git config --global user.email 'cloudOps@iits-consulting.de'
+          git add plugin.yaml
+          git commit -m "Update plugin.yaml with new version and checksums"
+          git push origin HEAD:main
