@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "iits-ollama-fullstack.fullname" $ }}
+  name: {{ include "myService.fullname" $ }}
   {{- with .labels }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -15,7 +15,7 @@ spec:
   ingressClassName: {{ .className | default "traefik" }}
 
   {{- if .defaultIngress.enabled | default true }}
-  {{- $certSecretName := (.defaultIngress.tls).secretName | default (printf "%s-%s" (include "iits-ollama-fullstack.fullname" $) "cert")}}
+  {{- $certSecretName := (.defaultIngress.tls).secretName | default (printf "%s-%s" (include "myService.fullname" $) "cert")}}
   tls:
     - hosts:
         - {{ tpl (toYaml .host) $ }}
@@ -31,20 +31,20 @@ spec:
                 {{- if (.defaultIngress.backend).name }}
                 name: {{ tpl (toYaml .defaultIngress.backend.name) $ }}
                 {{- else }}
-                name: {{ default (include "iits-ollama-fullstack.fullname" $)}}
+                name: {{ default (include "myService.fullname" $)}}
                 {{- end}}
                 port:
                   {{- if ((.defaultIngress.backend).port).name }}
                   name: {{ tpl (toYaml .defaultIngress.backend.port.name) $ }}
                   {{- else }}
-                  name: {{ default (include "iits-ollama-fullstack.fullname" $)}}
+                  name: {{ default (include "myService.fullname" $)}}
                   {{- end}}
   {{- else }}
 
   {{- if .tls }}
   tls:
     {{- range .tls }}
-    {{- $certSecretName := .secretName | default (printf "%s-%s" (include "iits-ollama-fullstack.fullname" $) "cert")}}
+    {{- $certSecretName := .secretName | default (printf "%s-%s" (include "myService.fullname" $) "cert")}}
     {{- if .hosts }}
     {{- range .hosts }}
     - hosts:
@@ -67,13 +67,13 @@ spec:
                 {{- if (.backend).name }}
                 name: {{ tpl (toYaml .backend.name) $ }}
                 {{- else }}
-                name: {{ default (include "iits-ollama-fullstack.fullname" $)}}
+                name: {{ default (include "myService.fullname" $)}}
                 {{- end}}
                 port:
                   {{- if ((.backend).port).name }}
                   name: {{ tpl (toYaml .defaultIngress.backend.port.name) $ }}
                   {{- else }}
-                  name: {{ default (include "iits-ollama-fullstack.fullname" $)}}
+                  name: {{ default (include "myService.fullname" $)}}
                   {{- end}}
             {{- end }}
       {{- end }}
