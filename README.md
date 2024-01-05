@@ -2,7 +2,6 @@
 
 `iits-chart-creator` is a powerful cli helm tool designed to streamline and automate the process of creating and managing Helm charts for iits projects.
 
-
 ```shell
 Available Commands:
   deployment      Creates a deployment deployment file
@@ -13,6 +12,9 @@ Available Commands:
   serviceaccount  Creates a serviceaccount deployment file
 ```
 
+## Demo
+
+https://github.com/iits-consulting/iits-chart-creator/raw/main/documentation/usage.webm
 
 ## Install
 
@@ -32,6 +34,7 @@ go build . && mv iits-chart-creator binaries/iits-chart-creator_linux_amd64_v1/ 
 ```
 
 ## Usage
+
 
 ```shell
 charter
