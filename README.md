@@ -14,7 +14,7 @@ Available Commands:
 
 ## Demo
 
-https://github.com/iits-consulting/iits-chart-creator/raw/main/documentation/usage.webm
+[2024-01-05 16-44-27-cut-merged-1704470188632.webm](https://github.com/iits-consulting/iits-chart-creator/assets/19291722/5dead70c-ed39-4b9e-8b28-c144a6c56b9a)
 
 ## Install
 
