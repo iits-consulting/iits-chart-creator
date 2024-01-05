@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "myService.fullname" . }}
+  labels:
+    {{- include "myService.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicaCount }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      {{- include "myService.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.deployment.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "myService.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.deployment.onePodForEachNode}}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                      - {{ include "myService.fullname" . }}
+              topologyKey: "kubernetes.io/hostname"
+      {{- end}}
+      {{- with .Values.deployment.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "myService.serviceAccountName" . }}
+      {{- if .Values.deployment.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.deployment.podSecurityContext | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Release.Name }}
+          {{- if .Values.deployment.securityContext }}
+          securityContext:
+            {{- toYaml .Values.deployment.securityContext | nindent 12 }}
+          {{- end }}
+          image: "{{ tpl .Values.deployment.image.repository . }}:{{ .Values.deployment.image.tag }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          env:
+            {{- range $key, $value := .Values.deployment.env }}
+            - name: {{ printf "%s" $key | replace "." "_" | upper | quote }}
+              value: {{ tpl ($value | toString) $ | quote }}
+            {{- end }}
+          {{- if .Values.deployment.envSecretName}}
+          envFrom:
+            - secretRef:
+                name: {{.Values.deployment.envSecretName}}
+          {{- end }}
+          ports:
+            {{- range $name,$values := .Values.deployment.ports }}
+            - name: {{$name }}
+              protocol: {{ ($values).protocol | default "TCP"}}
+              containerPort: {{($values).port | default 80 }}
+            {{- end }}
+          {{- with ((.Values.deployment).health).liveness }}
+          livenessProbe:
+            httpGet:
+              path: {{ tpl .path $ | default "/" }}
+              port: {{ .port | default 80 }}
+            initialDelaySeconds: {{ .initialDelaySeconds | default 20 }}
+            periodSeconds: 5
+            failureThreshold: {{ .failureThreshold | default 5 }}
+          {{- end }}
+          {{- with ((.Values.deployment).health).readiness }}
+          readinessProbe:
+            httpGet:
+              path: {{ tpl .path $ | default "/" }}
+              port: {{ .port | default 80 }}
+            initialDelaySeconds: {{ .initialDelaySeconds | default 20 }}
+            periodSeconds: 5
+            failureThreshold: {{ .failureThreshold | default 5 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+      {{- with .Values.deployment.volumeMounts }}
+          volumeMounts:
+              {{- toYaml . | nindent 12 }}
+      {{- end }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

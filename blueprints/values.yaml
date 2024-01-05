@@ -1,0 +1,110 @@
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+ingress:
+  enabled: true
+  host: #REPLACE_ME
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  # Creates default Ingress with tls and the given host from .Values.ingress.host
+  defaultIngress:
+    enabled: true
+    ## Default values can be overriden
+    #tls:
+    #  secretName: "myService.fullname"
+    #path: "/"
+    #pathType: "Prefix"
+    #backend:
+    #  name: "myService.fullname" #tpl supported
+    #  port:
+    #    name: "myService.fullname" #tpl supported
+
+  ## If you don't want to use the default Ingress, you can define it here on your own
+  #tls:
+  #  - hosts:
+  #      - "{{.Values.ingress.host}}"
+  #    secretName: "myService-cert"
+  #hosts:
+  #  - host: "{{.Values.ingress.host}}"
+  #    paths:
+  #      - path: "/"
+  #        backend:
+  #         name: "{{include "myService.fullname" $}}"
+  #         port:
+  #            name: "{{include "myService.fullname" $}}"
+
+deployment:
+  replicaCount: "2"
+
+  image:
+    repository: #REPLACE_ME
+    pullPolicy: IfNotPresent
+    tag: #REPLACE_ME
+
+  imagePullSecrets: [ ]
+  nameOverride: ""
+  fullnameOverride: ""
+
+  podAnnotations: { }
+
+  podSecurityContext:
+  # fsGroup: 2000
+
+  securityContext:
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+  volumes: { }
+  volumeMounts: { }
+
+  affinity: { }
+
+  ports:
+    http:
+
+  health:
+    liveness:
+      path: "/"
+      initialDelaySeconds: 20
+      failureThreshold: 3
+    readiness:
+      path: "/"
+      initialDelaySeconds: 20
+      failureThreshold: 3
+
+  env:
+    MUH: "KUH"
+
+  #set the secret where to take env from
+  envFromSecret:
+
+service:
+  ports:
+    http:
+      #These values are the default values, override them if necessary
+      #targetPort: 80
+      ## port name from above
+      #name: "http"
+      #protocol: TCP
+      #port: 80
+
+serviceMonitor:
+  enabled: true
+  # Default values, override them if necessary
+  #labels: {}
+  #annotations: {}
+  #portName: "http"
+  #interval: "10s"
+  #path: "/metrics"

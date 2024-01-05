@@ -13,6 +13,7 @@ jobs:
           go-version: ^1.20
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
@@ -43,3 +44,12 @@ jobs:
         with:
           name: build
           path: iits-chart-creator
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'v3.7.1' # setup Helm version explicitly if necessary
+
+      - name: Validate Helm Chart
+        run: |
+          helm template blueprints --set deployment.image.repository=myrepo --set deployment.image.tag=mytag

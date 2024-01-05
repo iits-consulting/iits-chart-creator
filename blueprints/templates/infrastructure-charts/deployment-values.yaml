@@ -1,0 +1,58 @@
+deployment:
+  replicaCount: "2"
+
+  image:
+    repository: #REPLACE_ME
+    pullPolicy: IfNotPresent
+    tag: #REPLACE_ME
+
+  imagePullSecrets: [ ]
+  nameOverride: ""
+  fullnameOverride: ""
+
+  podAnnotations: { }
+
+  podSecurityContext:
+  # fsGroup: 2000
+
+  securityContext:
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+  volumes: { }
+  volumeMounts: { }
+
+  affinity: { }
+
+  ports:
+    http:
+
+  health:
+    startupProbe:
+      path: "/"
+      # initialDelaySeconds: # defaults to 20
+      # periodSeconds: # defaults to 20
+      # failureThreshold: # defaults to 3
+      # port: # defaults to 80
+    liveness:
+      path: "/"
+      # initialDelaySeconds: # defaults to 20
+      # periodSeconds: # defaults to 20
+      # failureThreshold: # defaults to 3
+      # port: # defaults to 80
+    readiness:
+      path: "/"
+      # initialDelaySeconds: # defaults to 20
+      # periodSeconds: # defaults to 20
+      # failureThreshold: # defaults to 3
+      # port: # defaults to 80
+
+  env:
+    MUH: "KUH"
+
+  #set the secret where to take env from
+  envFromSecret:

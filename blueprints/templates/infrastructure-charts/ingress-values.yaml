@@ -1,0 +1,33 @@
+ingress:
+  enabled: true
+  host: #REPLACE_ME
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+  # Creates default Ingress with tls and the given host from .Values.ingress.host
+  defaultIngress:
+    enabled: true
+    ## Default values can be overriden
+    #tls:
+    #  secretName: "myService.fullname"
+    #path: "/"
+    #pathType: "Prefix"
+    #backend:
+    #  name: "myService.fullname" #tpl supported
+    #  port:
+    #    name: "myService.fullname" #tpl supported
+
+  ## If you don't want to use the default Ingress, you can define it here on your own
+  #tls:
+  #  - hosts:
+  #      - "{{.Values.ingress.host}}"
+  #    secretName: "myService-cert"
+  #hosts:
+  #  - host: "{{.Values.ingress.host}}"
+  #    paths:
+  #      - path: "/"
+  #        backend:
+  #         name: "{{include "myService.fullname" $}}"
+  #         port:
+  #            name: "{{include "myService.fullname" $}}"

@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 )
 
+const bluePrintPath = "blueprints/templates"
+
 func appendToFile(source, destination string) error {
 	// Read the source file
 	srcFile, err := os.ReadFile(source)
@@ -41,10 +43,10 @@ func appendToFile(source, destination string) error {
 	return nil
 }
 
-func mergeValuesFiles(cmd *cobra.Command) error {
+func mergeValuesFiles(cmd *cobra.Command, chartType string) error {
 	folderName, _ := getCurrentFolderName()
 	pluginDir := os.Getenv("HELM_PLUGIN_DIR")
-	valuesSource := filepath.Join(pluginDir, "infrastructure-charts", "blueprints", cmd.Name()+"-values.yaml")
+	valuesSource := filepath.Join(pluginDir, bluePrintPath, chartType, cmd.Name()+"-values.yaml")
 
 	if _, err := os.Stat(valuesSource); os.IsNotExist(err) {
 		return err
@@ -68,10 +70,10 @@ func mergeValuesFiles(cmd *cobra.Command) error {
 }
 
 // checkAndCreateResource checks files and creates the required resources
-func checkAndCreateResource(cmd *cobra.Command, resource string) {
+func checkAndCreateResource(cmd *cobra.Command, kubernetesResourceName string, chartType string) {
 	err := checkFileExist("./Chart.yaml")
 	if err != nil {
-		fmt.Println("You can only create a resource if you are inside a helm chart.")
+		fmt.Println("You can only create a kubernetesResourceName if you are inside a helm chart.")
 		return
 	}
 	folderName, err := getCurrentFolderName()
@@ -80,16 +82,16 @@ func checkAndCreateResource(cmd *cobra.Command, resource string) {
 		return
 	}
 	pluginDir := os.Getenv("HELM_PLUGIN_DIR")
-	sourcePath := filepath.Join(pluginDir, "infrastructure-charts", "blueprints", resource)
-	destinationPath := fmt.Sprintf("./templates/%s", resource)
+	sourcePath := filepath.Join(pluginDir, bluePrintPath, chartType, kubernetesResourceName)
+	destinationPath := fmt.Sprintf("./templates/%s", kubernetesResourceName)
 	err = ReplaceInFile(sourcePath, "myService", folderName, destinationPath)
 	if err != nil {
-		fmt.Printf("Error creating %s file: %v\n", resource, err)
+		fmt.Printf("Error creating %s file: %v\n", kubernetesResourceName, err)
 		return
 	}
-	fmt.Printf("%s file created successfully.\n", resource)
+	fmt.Printf("%s file created successfully.\n", kubernetesResourceName)
 
-	err2 := mergeValuesFiles(cmd)
+	err2 := mergeValuesFiles(cmd, chartType)
 	if err2 != nil {
 		fmt.Printf("Error merging values files: %v\n", err2)
 		return

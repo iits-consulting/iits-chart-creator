@@ -2,15 +2,55 @@
 
 `iits-chart-creator` is a powerful cli helm tool designed to streamline and automate the process of creating and managing Helm charts for iits projects.
 
-Current features:
-- ingress
-- _helpers.tpl
+
+```shell
+Available Commands:
+  deployment      Creates a deployment deployment file
+  helpers.tpl     Creates a helpers.tpl deployment file
+  ingress         Creates a Ingress YAML deployment file
+  service         Creates a service deployment file
+  service-monitor Creates a service-monitor deployment file
+  serviceaccount  Creates a serviceaccount deployment file
+```
 
 
-## Usage
+## Install
+
 
 ```shell
 helm plugin install https://github.com/iits-consulting/iits-chart-creator
 #We would recommend to put this also into your .bash_aliases
-alias updateChartCreator="helm plugin update helm-chart-creator && helm iits-chart-creator -v"
+alias updateCharter="helm plugin update iits-chart-creator && helm iits-chart-creator -v"
+alias charter='helm iits-chart-creator infrastructure-charts'
+```
+
+### Local development
+If you want to test it out locally execute the following
+
+```shell
+go build . && mv iits-chart-creator binaries/iits-chart-creator_linux_amd64_v1/ && helm plugin rm iits-chart-creator && helm plugin install .
+```
+
+## Usage
+
+```shell
+charter
+
+Creates Infrastructure Charts
+
+Usage:
+  iits-chart-creator infrastructure-charts [command]
+
+Available Commands:
+  deployment      Creates a deployment deployment file
+  helpers.tpl     Creates a helpers.tpl deployment file
+  ingress         Creates a Ingress YAML deployment file
+  service         Creates a service deployment file
+  service-monitor Creates a service-monitor deployment file
+  serviceaccount  Creates a serviceaccount deployment file
+
+Flags:
+  -h, --help   help for infrastructure-charts
+
+Use "iits-chart-creator infrastructure-charts [command] --help" for more information about a command.
 ```

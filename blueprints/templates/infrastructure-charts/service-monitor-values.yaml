@@ -1,0 +1,8 @@
+serviceMonitor:
+  enabled: true
+  # Default values, override them if necessary
+  #labels: {}
+  #annotations: {}
+  #portName: "http"
+  #interval: "10s"
+  #path: "/metrics"
