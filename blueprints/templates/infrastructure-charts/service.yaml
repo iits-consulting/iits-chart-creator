@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "myService.fullname" . }}
+  labels:
+    {{- include "myService.labels" . | nindent 4 }}
+spec:
+  type: {{ (.Values.service).serviceType | default "ClusterIP"}}
+  ports:
+    {{- range $name,$values := .Values.service.ports }}
+    - targetPort: {{ ($values).targetPort | default 80 }}
+      name: {{ ($values).name | default $name }}
+      protocol: {{ ($values).protocol | default "TCP"}}
+      port: {{($values).port | default 80 }}
+    {{- end }}
+  selector:
+    {{- include "myService.selectorLabels" . | nindent 4 }}

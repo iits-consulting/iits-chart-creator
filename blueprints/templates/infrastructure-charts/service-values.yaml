@@ -1,0 +1,9 @@
+service:
+  ports:
+    http:
+    #These values are the default values, override them if necessary
+    #targetPort: 80
+    ## port name from above
+    #name: "http"
+    #protocol: TCP
+    #port: 80

@@ -48,3 +48,14 @@ Selector labels
 {{- define "myService.selectorLabels" -}}
 app: {{ include "myService.name" . }}
 {{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "myService.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "myService.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
