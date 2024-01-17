@@ -9,7 +9,7 @@ metadata:
   {{- end }}
   {{- with .Values.serviceMonitor.annotations }}
   annotations:
-    iits-consulting.chart-creator-version: "1.0.0"
+    iits-consulting.chart-creator/version: "1.0.0"
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
