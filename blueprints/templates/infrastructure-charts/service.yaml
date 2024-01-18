@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "myService.fullname" . }}
   annotations:
-    iits-consulting.chart-creator/version: "1.0.0"
+    iits-consulting.chart-creator/version: "1.0.1"
   labels:
     {{- include "myService.labels" . | nindent 4 }}
 spec:
