@@ -1,14 +1,25 @@
 package main
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 )
+
+var version string = "{Version}"
+var overrideReleaseName string
 
 func main() {
 	cmdInfrastructureCharts := createInfrastructureChartsCMD()
 	var rootCmd = &cobra.Command{
-		Use: "iits-chart-creator",
+		Use:     "iits-chart-creator",
+		Version: version,
 	}
+	folderName, err := getCurrentFolderName()
+	if err != nil {
+		fmt.Printf("Error getting current folder name: %v\n", err)
+		return
+	}
+	rootCmd.PersistentFlags().StringVarP(&overrideReleaseName, "override-release-name", "o", folderName, "Override the chart's release name")
 	rootCmd.AddCommand(cmdInfrastructureCharts)
 	cobra.CheckErr(rootCmd.Execute())
 }
@@ -18,7 +29,12 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		Use:   "ingress",
 		Short: "Creates a Ingress YAML deployment file",
 		Run: func(cmd *cobra.Command, args []string) {
-			checkAndCreateResource(cmd, "ingress.yaml", "infrastructure-charts")
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "ingress.yaml",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
 		},
 	}
 
@@ -26,7 +42,12 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		Use:   "helpers.tpl",
 		Short: "Creates a helpers.tpl deployment file",
 		Run: func(cmd *cobra.Command, args []string) {
-			checkAndCreateResource(cmd, "_helpers.tpl", "infrastructure-charts")
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "_helpers.tpl",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
 		},
 	}
 
@@ -39,7 +60,12 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		Use:   "deployment",
 		Short: "Creates a deployment deployment file",
 		Run: func(cmd *cobra.Command, args []string) {
-			checkAndCreateResource(cmd, "deployment.yaml", "infrastructure-charts")
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "deployment.yaml",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
 		},
 	}
 
@@ -47,7 +73,12 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		Use:   "service",
 		Short: "Creates a service deployment file",
 		Run: func(cmd *cobra.Command, args []string) {
-			checkAndCreateResource(cmd, "service.yaml", "infrastructure-charts")
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "service.yaml",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
 		},
 	}
 
@@ -55,7 +86,12 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		Use:   "serviceaccount",
 		Short: "Creates a serviceaccount deployment file",
 		Run: func(cmd *cobra.Command, args []string) {
-			checkAndCreateResource(cmd, "serviceaccount.yaml", "infrastructure-charts")
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "serviceaccount.yaml",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
 		},
 	}
 
@@ -63,7 +99,12 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		Use:   "service-monitor",
 		Short: "Creates a service-monitor deployment file",
 		Run: func(cmd *cobra.Command, args []string) {
-			checkAndCreateResource(cmd, "service-monitor.yaml", "infrastructure-charts")
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "service-monitor.yaml",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
 		},
 	}
 
