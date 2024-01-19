@@ -1,6 +1,10 @@
 name: Build and Publish Artifacts
 
 on:
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
   push:
     tags:
       - '*'
