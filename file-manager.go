@@ -16,8 +16,8 @@ func getCurrentFolderName() (string, error) {
 	return filepath.Base(cwd), nil
 }
 
-// Function to replace old word with new word in a file
-func ReplaceInFile(path, oldWord, newWord, newPath string) error {
+// Function to replace old word with new words in a file, accepts a map for replacements
+func ReplaceInFile(path string, replacements map[string]string, newPath string) error {
 	file, err := os.Open(path)
 	if err != nil {
 		return err
@@ -33,7 +33,10 @@ func ReplaceInFile(path, oldWord, newWord, newPath string) error {
 	scanner := bufio.NewScanner(file)
 	writer := bufio.NewWriter(newFile)
 	for scanner.Scan() {
-		line := strings.ReplaceAll(scanner.Text(), oldWord, newWord)
+		line := scanner.Text()
+		for oldWord, newWord := range replacements {
+			line = strings.ReplaceAll(line, oldWord, newWord)
+		}
 		if _, err = writer.WriteString(line + "\n"); err != nil {
 			return err
 		}

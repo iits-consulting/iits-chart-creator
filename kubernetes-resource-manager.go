@@ -9,6 +9,20 @@ import (
 
 const bluePrintPath = "blueprints/templates"
 
+type DataInputForCreation struct {
+	ManifestName string
+	ChartType    string
+	Version      string
+	ReleaseName  string
+}
+
+func (d *DataInputForCreation) GenerateReplacements() map[string]string {
+	return map[string]string{
+		"myService":             d.ReleaseName,
+		"CHART_CREATOR_VERSION": d.Version,
+	}
+}
+
 func appendToFile(source, destination string) error {
 	// Read the source file
 	srcFile, err := os.ReadFile(source)
@@ -43,17 +57,16 @@ func appendToFile(source, destination string) error {
 	return nil
 }
 
-func mergeValuesFiles(cmd *cobra.Command, chartType string) error {
-	folderName, _ := getCurrentFolderName()
+func mergeValuesFiles(cmd *cobra.Command, dataInputForCreation DataInputForCreation) error {
 	pluginDir := os.Getenv("HELM_PLUGIN_DIR")
-	valuesSource := filepath.Join(pluginDir, bluePrintPath, chartType, cmd.Name()+"-values.yaml")
+	valuesSource := filepath.Join(pluginDir, bluePrintPath, dataInputForCreation.ChartType, cmd.Name()+"-values.yaml")
 
 	if _, err := os.Stat(valuesSource); os.IsNotExist(err) {
 		return err
 	}
 
 	tempPath := "./" + cmd.Name() + "-values.yaml"
-	err := ReplaceInFile(valuesSource, "myService", folderName, tempPath)
+	err := ReplaceInFile(valuesSource, dataInputForCreation.GenerateReplacements(), tempPath)
 	if err != nil {
 		return err
 	}
@@ -70,28 +83,26 @@ func mergeValuesFiles(cmd *cobra.Command, chartType string) error {
 }
 
 // checkAndCreateResource checks files and creates the required resources
-func checkAndCreateResource(cmd *cobra.Command, kubernetesResourceName string, chartType string) {
+func checkAndCreateResource(cmd *cobra.Command, dataInputForCreation DataInputForCreation) {
 	err := checkFileExist("./Chart.yaml")
 	if err != nil {
 		fmt.Println("You can only create a kubernetesResourceName if you are inside a helm chart.")
 		return
 	}
-	folderName, err := getCurrentFolderName()
-	if err != nil {
-		fmt.Printf("Error getting current folder name: %v\n", err)
-		return
-	}
 	pluginDir := os.Getenv("HELM_PLUGIN_DIR")
-	sourcePath := filepath.Join(pluginDir, bluePrintPath, chartType, kubernetesResourceName)
-	destinationPath := fmt.Sprintf("./templates/%s", kubernetesResourceName)
-	err = ReplaceInFile(sourcePath, "myService", folderName, destinationPath)
+	manifestName := dataInputForCreation.ManifestName
+	chartType := dataInputForCreation.ChartType
+	sourcePath := filepath.Join(pluginDir, bluePrintPath, chartType, manifestName)
+	destinationPath := fmt.Sprintf("./templates/%s", manifestName)
+
+	err = ReplaceInFile(sourcePath, dataInputForCreation.GenerateReplacements(), destinationPath)
 	if err != nil {
-		fmt.Printf("Error creating %s file: %v\n", kubernetesResourceName, err)
+		fmt.Printf("Error creating %s file: %v\n", manifestName, err)
 		return
 	}
-	fmt.Printf("%s file created successfully.\n", kubernetesResourceName)
+	fmt.Printf("%s file created successfully.\n", manifestName)
 
-	err2 := mergeValuesFiles(cmd, chartType)
+	err2 := mergeValuesFiles(cmd, dataInputForCreation)
 	if err2 != nil {
 		fmt.Printf("Error merging values files: %v\n", err2)
 		return

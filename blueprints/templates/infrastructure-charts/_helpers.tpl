@@ -35,6 +35,7 @@ Common labels
 */}}
 {{- define "myService.labels" -}}
 helm.sh/chart: {{ include "myService.chart" . }}
+iits-consulting.chart-creator/version: CHART_CREATOR_VERSION
 {{ include "myService.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
