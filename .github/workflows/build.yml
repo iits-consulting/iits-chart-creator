@@ -1,7 +1,11 @@
 name: Build
 on:
-  - pull_request
-  - push
+  pull_request:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
 jobs:
   lint:
     name: Lint the iits-chart-creator source code
