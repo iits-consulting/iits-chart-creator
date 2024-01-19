@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version string = "{Version}"
+var version = "dev"
 var overrideReleaseName string
 
 func main() {
@@ -19,6 +19,7 @@ func main() {
 		fmt.Printf("Error getting current folder name: %v\n", err)
 		return
 	}
+	rootCmd.Version = version
 	rootCmd.PersistentFlags().StringVarP(&overrideReleaseName, "override-release-name", "o", folderName, "Override the chart's release name")
 	rootCmd.AddCommand(cmdInfrastructureCharts)
 	cobra.CheckErr(rootCmd.Execute())

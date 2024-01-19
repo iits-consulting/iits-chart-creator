@@ -24,11 +24,6 @@ jobs:
         with:
           go-version: ^1.20
 
-      - name: Replace version in Go file
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          sed -i "s/{Version}/$VERSION/g" main.go
-
       - name: Install GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
