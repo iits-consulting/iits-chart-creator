@@ -2,8 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "myService.fullname" . }}
+  {{- with .annotations }}
   annotations:
     iits-consulting.chart-creator/version: CHART_CREATOR_VERSION
+    {{- tpl (toYaml .) $ | nindent 4 }}
+  {{- end }}
   labels:
     {{- include "myService.labels" . | nindent 4 }}
 spec:
