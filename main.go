@@ -22,6 +22,7 @@ func main() {
 	rootCmd.Version = version
 	rootCmd.PersistentFlags().StringVarP(&overrideReleaseName, "override-release-name", "o", folderName, "Override the chart's release name")
 	rootCmd.AddCommand(cmdInfrastructureCharts)
+	rootCmd.AddCommand(completionCmd)
 	cobra.CheckErr(rootCmd.Execute())
 }
 
