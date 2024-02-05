@@ -30,6 +30,8 @@ deployment:
 
   ports:
     http:
+      # port: # defaults to 80
+      # protocol: # defaults to TCP
 
   health:
     startupProbe:

@@ -109,11 +109,25 @@ func createInfrastructureChartsCMD() *cobra.Command {
 		},
 	}
 
+	var podMonitorCreateHelpers = &cobra.Command{
+		Use:   "pod-monitor",
+		Short: "Creates a pod-monitor deployment file",
+		Run: func(cmd *cobra.Command, args []string) {
+			checkAndCreateResource(cmd, DataInputForCreation{
+				ManifestName: "pod-monitor.yaml",
+				ChartType:    "infrastructure-charts",
+				Version:      version,
+				ReleaseName:  overrideReleaseName,
+			})
+		},
+	}
+
 	cmdInfrastructureCharts.AddCommand(cmdCreateIngress)
 	cmdInfrastructureCharts.AddCommand(cmdCreateHelpers)
 	cmdInfrastructureCharts.AddCommand(saCreateHelpers)
 	cmdInfrastructureCharts.AddCommand(serviceCreateHelpers)
 	cmdInfrastructureCharts.AddCommand(deploymentCreateHelpers)
 	cmdInfrastructureCharts.AddCommand(serviceMonitorCreateHelpers)
+	cmdInfrastructureCharts.AddCommand(podMonitorCreateHelpers)
 	return cmdInfrastructureCharts
 }

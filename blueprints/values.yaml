@@ -73,6 +73,8 @@ deployment:
 
   ports:
     http:
+    # port: # defaults to 80
+    # protocol: # defaults to TCP
 
   health:
     liveness:
@@ -105,6 +107,15 @@ serviceMonitor:
   # Default values, override them if necessary
   #labels: {}
   #annotations: {}
-  #portName: "http"
+  #port: "metrics"
+  #interval: "10s"
+  #path: "/metrics"
+
+podMonitor:
+  enabled: true
+  # Default values, override them if necessary
+  #labels: {}
+  #annotations: {}
+  #port: "metrics"
   #interval: "10s"
   #path: "/metrics"

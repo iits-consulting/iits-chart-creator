@@ -1,0 +1,8 @@
+podMonitor:
+  enabled: true
+  # Default values, override them if necessary
+  #labels: {}
+  #annotations: {}
+  #port: "metrics"
+  #interval: "10s"
+  #path: "/metrics"
