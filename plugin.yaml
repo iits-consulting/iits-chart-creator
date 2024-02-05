@@ -1,5 +1,5 @@
 name: "iits-chart-creator"
-version: "1.0.9"
+version: "1.0.10"
 usage: "This creates helm charts based on iits standards"
 description: "iits helm chart manager"
 ignoreFlags: false
