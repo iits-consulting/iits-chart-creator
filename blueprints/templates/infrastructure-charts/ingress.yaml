@@ -13,7 +13,7 @@ metadata:
     {{- tpl (toYaml .) $ | nindent 4 }}
   {{- end }}
 spec:
-  ingressClassName: {{ .className | default "traefik" }}
+  ingressClassName: {{ (include "ingressClassName" $) }}
 
   {{- if .defaultIngress.enabled }}
   {{- $certSecretName := (.defaultIngress.tls).secretName | default (printf "%s-%s" (include "myService.fullname" $) "cert")}}
