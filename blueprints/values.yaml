@@ -9,7 +9,8 @@ serviceAccount:
 
 ingress:
   enabled: true
-  host: #REPLACE_ME
+  # -- Required, replace it with your host address
+  host:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -45,9 +46,11 @@ deployment:
   replicaCount: "2"
 
   image:
-    repository: #REPLACE_ME
+    # -- Required
+    repository:
     pullPolicy: IfNotPresent
-    tag: #REPLACE_ME
+    # -- Required
+    tag:
 
   imagePullSecrets: [ ]
   nameOverride: ""

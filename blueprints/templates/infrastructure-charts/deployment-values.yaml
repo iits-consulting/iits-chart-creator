@@ -2,9 +2,11 @@ deployment:
   replicaCount: "2"
 
   image:
-    repository: #REPLACE_ME
+    # -- Required
+    repository:
     pullPolicy: IfNotPresent
-    tag: #REPLACE_ME
+    # -- Required
+    tag:
 
   imagePullSecrets: [ ]
   nameOverride: ""
