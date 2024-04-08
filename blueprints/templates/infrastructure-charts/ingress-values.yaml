@@ -11,6 +11,7 @@ ingress:
     enabled: true
     ## Default values can be overriden
     #tls:
+    #  enabled: true
     #  secretName: "myService.fullname"
     #path: "/"
     #pathType: "Prefix"
