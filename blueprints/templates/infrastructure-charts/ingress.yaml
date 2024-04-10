@@ -16,7 +16,7 @@ spec:
   ingressClassName: {{ (include "ingressClassName" $) }}
 
   {{- if .defaultIngress.enabled }}
-  {{- if ne (.defaultIngress.tls).enabled "false" }}
+  {{- if ne (.defaultIngress.tls).enabled "true" }}
   {{- $certSecretName := (.defaultIngress.tls).secretName | default (printf "%s-%s" (include "myService.fullname" $) "cert")}}
   tls:
     - hosts:

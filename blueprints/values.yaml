@@ -12,7 +12,6 @@ ingress:
   # -- Required, replace it with your host address
   host:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
   # Creates default Ingress with tls and the given host from .Values.ingress.host
@@ -20,6 +19,7 @@ ingress:
     enabled: true
     ## Default values can be overriden
     #tls:
+    #  enabled: "false"
     #  secretName: "myService.fullname"
     #path: "/"
     #pathType: "Prefix"
